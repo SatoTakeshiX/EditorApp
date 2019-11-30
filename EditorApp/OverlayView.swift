@@ -68,8 +68,12 @@ struct OverlayView: View {
                 .foregroundColor(Color.white)
                 .frame(width: 300, height: 300, alignment: .center)
 
-                .overlay( DrawPathView(viewModel: viewModel)
-                    .overlay(Path { path in
+                .overlay(
+
+                    DrawPathView(viewModel: viewModel)
+                    .overlay(
+                        // ドラッグ中の描画。指を離したらここの描画は消えるがDrawPathViewが上書きするので見た目は問題ない
+                        Path { path in
                         path.addLines(tmpDrawPoints.points)
 
                     }
