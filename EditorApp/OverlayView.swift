@@ -67,7 +67,14 @@ struct OverlayView: View {
             Rectangle()
                 .foregroundColor(Color.white)
                 .frame(width: 300, height: 300, alignment: .center)
+
                 .overlay( DrawPathView(viewModel: viewModel)
+                    .overlay(Path { path in
+                        path.addLines(tmpDrawPoints.points)
+
+                    }
+                    .stroke(tmpDrawPoints.color, lineWidth: 10)
+                    )
             )
                 .gesture(
                     DragGesture()
@@ -76,12 +83,13 @@ struct OverlayView: View {
                             if self.startPoint != value.startLocation {
                                 self.tmpDrawPoints.points.append(value.location)
                                 self.tmpDrawPoints.color = self.selectedColor.color
+
                             }
                         })
                         .onEnded({ (value) in
                             self.startPoint = value.startLocation
                             self.viewModel.drawData.dragPoints.append(self.tmpDrawPoints)
-                            self.tmpDrawPoints = DrawPoints(points: [], color: .red)
+                            self.tmpDrawPoints = DrawPoints(points: [], color: self.selectedColor.color)
                         })
             )
             VStack {
