@@ -15,6 +15,7 @@
 		306F588E239156A200F4130E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 306F588C239156A200F4130E /* LaunchScreen.storyboard */; };
 		306F5899239156A200F4130E /* EditorAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306F5898239156A200F4130E /* EditorAppTests.swift */; };
 		306F58A4239156A200F4130E /* EditorAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306F58A3239156A200F4130E /* EditorAppUITests.swift */; };
+		306F58B223915A4B00F4130E /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306F58B123915A4B00F4130E /* OverlayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		306F589F239156A200F4130E /* EditorAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EditorAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		306F58A3239156A200F4130E /* EditorAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAppUITests.swift; sourceTree = "<group>"; };
 		306F58A5239156A200F4130E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		306F58B123915A4B00F4130E /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				306F5881239156A000F4130E /* AppDelegate.swift */,
 				306F5883239156A000F4130E /* SceneDelegate.swift */,
 				306F5885239156A000F4130E /* ContentView.swift */,
+				306F58B123915A4B00F4130E /* OverlayView.swift */,
 				306F5887239156A200F4130E /* Assets.xcassets */,
 				306F588C239156A200F4130E /* LaunchScreen.storyboard */,
 				306F588F239156A200F4130E /* Info.plist */,
@@ -268,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				306F5882239156A000F4130E /* AppDelegate.swift in Sources */,
+				306F58B223915A4B00F4130E /* OverlayView.swift in Sources */,
 				306F5884239156A000F4130E /* SceneDelegate.swift in Sources */,
 				306F5886239156A000F4130E /* ContentView.swift in Sources */,
 			);
