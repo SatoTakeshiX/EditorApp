@@ -12,7 +12,7 @@ enum DrawType {
     case red
     case clear
     case black
-
+    
     var color: Color {
         switch self {
             case .red:
