@@ -11,6 +11,7 @@ import SwiftUI
 enum DrawType {
     case red
     case clear
+    case black
 
     var color: Color {
         switch self {
@@ -18,6 +19,8 @@ enum DrawType {
                 return Color.red
             case .clear:
                 return Color.white
+            case .black:
+                return Color.black
         }
     }
 }
@@ -37,9 +40,9 @@ final class DrawViewModel: ObservableObject {
     init(drawData: DrawData) {
         self.drawData = drawData
     }
-    func screenShot(size: CGSize) {
+    func screenShot() {
         let rootView = UIApplication.shared.windows.first!
-        let screenshot = rootView.screenShot(size: size)
+        let screenshot = rootView.screenShot(size: UIScreen.main.bounds.size)
         print(screenshot)
     }
 }
@@ -69,61 +72,59 @@ struct OverlayView: View {
     @State var selectedColor: DrawType = .red
     @State var canvasSize: CGSize = .zero
     var body: some View {
-        GeometryReader { geometry in
-            VStack {
-                Rectangle()
-                    .foregroundColor(Color.white)
-                    .frame(width: 300, height: 300, alignment: .center)
 
-                    .overlay(
+        VStack {
+            Rectangle()
+                .foregroundColor(Color.white)
+                .frame(width: 300, height: 300, alignment: .center)
 
-                        DrawPathView(viewModel: self.viewModel)
-                            .overlay(
-                                // ドラッグ中の描画。指を離したらここの描画は消えるがDrawPathViewが上書きするので見た目は問題ない
-                                Path { path in
-                                    path.addLines(self.tmpDrawPoints.points)
+                .overlay(
 
-                                }
-                                .stroke(self.tmpDrawPoints.color, lineWidth: 10)
-                        )
-                )
-                    .gesture(
-                        DragGesture()
-                            .onChanged({ (value) in
+                    DrawPathView(viewModel: self.viewModel)
+                        .overlay(
+                            // ドラッグ中の描画。指を離したらここの描画は消えるがDrawPathViewが上書きするので見た目は問題ない
+                            Path { path in
+                                path.addLines(self.tmpDrawPoints.points)
 
-                                if self.startPoint != value.startLocation {
-                                    self.tmpDrawPoints.points.append(value.location)
-                                    self.tmpDrawPoints.color = self.selectedColor.color
+                            }
+                            .stroke(self.tmpDrawPoints.color, lineWidth: 10)
+                    )
+            )
+                .gesture(
+                    DragGesture()
+                        .onChanged({ (value) in
 
-                                }
-                            })
-                            .onEnded({ (value) in
-                                self.startPoint = value.startLocation
-                                self.viewModel.drawData.dragPoints.append(self.tmpDrawPoints)
-                                self.tmpDrawPoints = DrawPoints(points: [], color: self.selectedColor.color)
-                            })
-                )
-                VStack(spacing: 10) {
-                    Button(action: {
-                        self.selectedColor = .red
+                            if self.startPoint != value.startLocation {
+                                self.tmpDrawPoints.points.append(value.location)
+                                self.tmpDrawPoints.color = self.selectedColor.color
 
-                    }) { Text("赤")
-                    }
-                    Button(action: {
-                        self.selectedColor = .clear
-                    }) { Text("消しゴム")
-                    }
-                    Button(action: {
-                        self.viewModel.screenShot(size: geometry.frame(in: .global).size)
-                    }) { Text("保存")
-                    }
-                    Spacer()
+                            }
+                        })
+                        .onEnded({ (value) in
+                            self.startPoint = value.startLocation
+                            self.viewModel.drawData.dragPoints.append(self.tmpDrawPoints)
+                            self.tmpDrawPoints = DrawPoints(points: [], color: self.selectedColor.color)
+                        })
+            )
+            VStack(spacing: 10) {
+                Button(action: {
+                    self.selectedColor = .red
 
+                }) { Text("赤")
                 }
-                .frame(minWidth: 0.0, maxWidth: CGFloat.infinity)
-                .background(Color.gray)
-            }
+                Button(action: {
+                    self.selectedColor = .clear
+                }) { Text("消しゴム")
+                }
+                Button(action: {
+                    self.viewModel.screenShot()
+                }) { Text("保存")
+                }
+                Spacer()
 
+            }
+            .frame(minWidth: 0.0, maxWidth: CGFloat.infinity)
+            .background(Color.gray)
         }
     }
 }
